@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
+    <script>
+        function toggleFields() {
+            let role = document.getElementById("id_role").value;
+            
+            
+            document.getElementById("farmer_fields").style.display = "none";
+            document.getElementById("merchant_fields").style.display = "none";
+            document.getElementById("admin_fields").style.display = "none";
+            document.getElementById("expert_fields").style.display = "none";
+
+           
+            if (role === "farmer") {
+                document.getElementById("farmer_fields").style.display = "block";
+            } else if (role === "merchant") {
+                document.getElementById("merchant_fields").style.display = "block";
+            } else if (role === "administrator") {
+                document.getElementById("admin_fields").style.display = "block";
+            } else if (role === "expert") {
+                document.getElementById("expert_fields").style.display = "block";
+            }
+        }
+        window.onload = toggleFields;
+    </script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'signup_style.css' %}">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center">Sign Up</h2>
+            
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Display Form Errors -->
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Fix the following errors:</strong>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+              
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Username</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Email Address</label>
+                    {{ form.email }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label">Password</label>
+                    {{ form.password1 }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password2" class="form-label">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_role" class="form-label">Role</label>
+                    {{ form.role }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_phone_number" class="form-label">Phone Number</label>
+                    {{ form.phone_number }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_address" class="form-label">Address</label>
+                    {{ form.address }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_city" class="form-label">City</label>
+                    {{ form.city }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_state" class="form-label">State</label>
+                    {{ form.state }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_zip_code" class="form-label">Zip Code</label>
+                    {{ form.zip_code }}
+                </div>
+
+               
+                <div id="farmer_fields" class="mb-3" style="display: none;">
+                    <h4>Farmer Details</h4>
+                    <label for="id_farm_size" class="form-label">Farm Size</label>
+                    {{ form.farm_size }}
+
+                    <label for="id_farm_type" class="form-label">Farm Type</label>
+                    {{ form.farm_type }}
+
+                    <label for="id_crops_grown" class="form-label">Crops Grown</label>
+                    {{ form.crops_grown }}
+                </div>
+
+                
+                <div id="merchant_fields" class="mb-3" style="display: none;">
+                    <h4>Merchant Details</h4>
+                    <label for="id_business_name" class="form-label">Business Name</label>
+                    {{ form.business_name }}
+
+                    <label for="id_license_number" class="form-label">License Number</label>
+                    {{ form.license_number }}
+
+                    <label for="id_business_type" class="form-label">Business Type</label>
+                    {{ form.business_type }}
+                </div>
+
+           
+                <div id="admin_fields" class="mb-3" style="display: none;">
+                    <h4>Administrator Details</h4>
+                    <label for="id_department" class="form-label">Department</label>
+                    {{ form.department }}
+
+                    <label for="id_admin_level" class="form-label">Admin Level</label>
+                    {{ form.admin_level }}
+                </div>
+
+               
+                <div id="expert_fields" class="mb-3" style="display: none;">
+                    <h4>Expert Details</h4>
+                    <label for="id_specialization" class="form-label">Specialization</label>
+                    {{ form.specialization }}
+
+                    <label for="id_qualifications" class="form-label">Qualifications</label>
+                    {{ form.qualifications }}
+
+                    <label for="id_years_experience" class="form-label">Years of Experience</label>
+                    {{ form.years_experience }}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            </form>
+
+           
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("id_role").addEventListener("change", toggleFields);
+    </script>
+</body>
+</html>

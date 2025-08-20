@@ -1,0 +1,84 @@
+:root {
+    /* Primary Colors */
+    --primary-green: #2c5e43;        /* Dark green in header */
+    --accent-yellow: #f7b731;        /* Yellow sign up button */
+    --light-beige: #f5f7e9;          /* Light background color */
+    --text-green: #2c5e43;           /* Text green color */
+    --button-green: #4d9269;         /* Visit Store button */
+    
+    /* Neutral Colors */
+    --white: #ffffff;
+    --black: #333333;
+    --gray: #666666;
+    
+    /* Card Colors */
+    --card-bg: #ffffff;
+    --card-border: #e0e0e0;
+  }
+  
+  /* Base styles using the color palette */
+  body {
+    background-color: var(--light-beige);
+    color: var(--black);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Header styles */
+  header, .navbar {
+    background-color: var(--primary-green);
+    color: var(--white);
+  }
+  
+  /* Navigation links */
+  .nav-link {
+    color: var(--white);
+  }
+  
+  .nav-link:hover {
+    color: var(--accent-yellow);
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    color: var(--black);
+  }
+  
+  .btn-secondary {
+    background-color: var(--white);
+    border-color: var(--white);
+    color: var(--black);
+  }
+  
+  .btn-green {
+    background-color: var(--button-green);
+    border-color: var(--button-green);
+    color: var(--white);
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-green);
+  }
+  
+  /* Cards */
+  .card {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+  }
+  
+  /* Feature sections */
+  .feature-section {
+    background-color: var(--light-beige);
+  }
+  
+  .feature-title {
+    color: var(--text-green);
+  }
+  
+  /* Footer */
+  footer {
+    background-color: var(--primary-green);
+    color: var(--white);
+  }

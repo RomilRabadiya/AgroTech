@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AgroTech - Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    {% load static %}
+    <script src="{% static 'home.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">AgroTech</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Yard Market</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
+               <!-- if uesr is authenticated and is administrator -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'scheme_list' %}">Schemes</a></li>
+
+               <!-- if uesr is authenticated and is administrator -->
+                {% if user.is_authenticated and user.role == "administrator" %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'add_product' %}">Add Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'add_category' %}">Add Category</a></li>
+                {% endif %}
+            </ul>
+
+            <ul class="navbar-nav ms-3">
+                 <!-- if uesr is authenticated  -->
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link">Welcome, {{ user.username }}!</a></li>
+                    <li class="nav-item">
+                        <a id="logout-btn" class="btn btn-danger btn-sm" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="btn btn-light btn-sm me-2" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="btn btn-warning btn-sm" href="{% url 'signup' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    
+
+
+<div class="container my-5">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h3><i class="fa-solid fa-seedling"></i> Smart Crop Advice</h3>
+                <p>Get AI-driven recommendations for better yields.</p>
+            </div>
+            <div class="col-md-4">
+                <h3><i class="fa-solid fa-store"></i> Yard Market</h3>
+                <p>Buy & sell agricultural products with ease.</p>
+            </div>
+            <div class="col-md-4">
+                <h3><i class="fa-solid fa-medkit"></i> Medicine & Schemes</h3>
+                <p>Access government schemes and agricultural solutions.</p>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="container my-5" id="yard">
+        <h2 class="text-center">Yard Market Highlights</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'farm.jpeg' %}" class="card-img-top" alt="Product 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Featured Product 1</h5>
+                        <p class="card-text">High-quality seeds for the season.</p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'for_home.jpg' %}" class="card-img-top" alt="Seller 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Top Seller: Farmer John</h5>
+                        <p class="card-text">Reliable seller with years of experience.</p>
+                        <a href="#" class="btn btn-primary">Visit Store</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="container my-5" id="crops">
+        <h2 class="text-center">Popular Crops</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <img class="card-img-top" src="{% static 'cotton.jpg' %}" alt="Cotton crop">
+                    <div class="card-body">
+                        <h3>Cotton</h3>
+                        <p>Learn about cultivation techniques, pest management, and market trends.</p>
+                        <a href="#" class="btn btn-success">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <img class="card-img-top" src="{% static 'peanuts.jpg' %}" alt="Peanuts crop">
+                    <div class="card-body">
+                        <h3>Peanuts</h3>
+                        <p>Discover farming practices and market opportunities.</p>
+                        <a href="#" class="btn btn-success">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="container my-5" id="medicine">
+        <h2 class="text-center">Government Schemes & Agricultural Solutions</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Crop Insurance Scheme</h5>
+                        <p class="card-text">Protect your crops against natural calamities.</p>
+                        <a href="#" class="btn btn-info">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Pest Control Solutions</h5>
+                        <p class="card-text">Effective solutions for common pests.</p>
+                        <a href="#" class="btn btn-info">View Solutions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    
+
+   
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-1">&copy; 2024 AgroTech. All rights reserved.</p>
+        <p>Contact us: <a href="mailto:info@agrotech.com" class="text-white">info@agrotech.com</a></p>
+    </footer>
+    <p id="test">Test Text</p>
+
+   
+    
+</body>
+</html>
