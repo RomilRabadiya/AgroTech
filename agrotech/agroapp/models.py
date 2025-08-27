@@ -21,25 +21,16 @@ class User(AbstractUser):
     zip_code = models.CharField(max_length=10, blank=True, null=True)
     
 
-class FarmerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='farmer_profile')
-    farm_size = models.FloatField(blank=True, null=True)  
-    farm_type = models.CharField(max_length=100, blank=True, null=True)  
-    crops_grown = models.TextField(blank=True, null=True)  
 
- 
-    
-   
-class AdministratorProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='admin_profile')
-    department = models.CharField(max_length=255, blank=True, null=True)
-    admin_level = models.IntegerField(default=1) 
+#@reciver is a decorator to connect the signal to the function
+# “Hey Django, whenever this signal happens, please call this function.”
 
-
-
-
+# post_save is a signal in Django.
+# It is sent after a model’s save() method is called
 
 @receiver(post_save, sender=User)
+
+#sender is the model that sends the signal ,instance is the actual instance being saved
 def create_user_profile(sender, instance, created, **kwargs):
   
     if created:
@@ -60,12 +51,35 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 
+#Form For FarmerProfile and AdministratorProfile Display After Regular User is created
+class FarmerProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='farmer_profile')
+    farm_size = models.FloatField(blank=True, null=True)  
+    farm_type = models.CharField(max_length=100, blank=True, null=True)  
+    crops_grown = models.TextField(blank=True, null=True)  
+
+
+class AdministratorProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='admin_profile')
+    department = models.CharField(max_length=255, blank=True, null=True)
+    admin_level = models.IntegerField(default=1) 
+
+
+
+
+
+
+
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
     
+
+
 
 
 
@@ -79,6 +93,9 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+
+#Order Depend on User and Product And Quantity
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

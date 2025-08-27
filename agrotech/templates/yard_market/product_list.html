@@ -56,6 +56,7 @@
 
 
 <div class="container mt-5">
+    <!--If user.role is farmer then This Your Order Button Display And CLick it So Go to user_order url-->
     {% if user.is_authenticated and user.role == "farmer" %}
     <a href="{% url 'user_orders' %}" class="btn btn-danger">your orders </a>
     {% endif %}
@@ -85,6 +86,9 @@
                                     <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 100px;">
                                 {% endif %}
                                 <br>
+
+                                <!--FOr Buy product For Farmer And Admin-->
+                                <!-- product.id     This is a dynamic argument passed to the URL. -->
                                 <a href="{% url 'order_product' product.id %}" class="btn btn-primary">Buy Now</a>
 
                                

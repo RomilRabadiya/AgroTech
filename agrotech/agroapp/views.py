@@ -10,19 +10,25 @@ def home(request):
 
 
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.all() #Add model Attribute to fetch all products
     return render(request, 'yard_market/product_list.html', {'products': products})
 
 
 def signup(request):
-    if request.method == 'POST':
+    if request.method == 'POST': #When form is submitted via POST
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)  
             return redirect('home') 
-    else:
+    else:#If the request method is GET When user first visits the signup page 
         form = SignupForm()
+
+
+        #Passing form to the template allows:
+        # Displaying the form fields.
+        # Prefilling them (with initial values or previous input).
+        # Showing form validation errors.
     return render(request, 'signup.html', {'form': form})
 
 
@@ -49,6 +55,11 @@ def profile_view(request):
     return render(request, 'profile.html', {'form': form})
 
 
+
+
+
+
+
 from django.templatetags.static import static
 
 def scheme_list(request):
@@ -73,56 +84,62 @@ def scheme_list(request):
 
 
 
-@login_required
-def add_product(request):
-    if request.user.role != 'administrator':
-        return redirect('home')
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('product_list')
-    else:
-        form = ProductForm()
-    return render(request, 'yard_market/add_product.html', {'form': form})
 
+#All view For functionality of Buy Product By User(Farmer And Admin)    And    Add , Update ,Delete Product Bu Admin   And   Add,Delete Category Of product By Admin
+
+
+#When user is farmer
 @login_required
-def order_product(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    order = Order(user=request.user, product=product)
-    order.save()
-    return redirect('product_list')
+def user_orders(request):
+    orders = Order.objects.filter(user=request.user)  #request.user is the currently logged-in user
+  
+    return render(request, 'yard_market/order_admin_list.html', {'orders': orders})
+
+
+#When user is administrator And see all orders
+@login_required
+def all_user_orders(request):
+   
+    orders1 = Order.objects.all()
+    return render(request, 'yard_market/order_admin_list.html', {'orders': orders1})
+
+
+
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'yard_market/product_list.html', {'products': products})
 
 
-from .models import Category
-from .forms import CategoryForm  # Ensure you have this form
 
+#WHen User Buy Product
 @login_required
-def manage_categories(request):
+def order_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)  #product_id is dynamic argument
+    order = Order(user=request.user, product=product) #Make New Order Pass Product access by product_id and current user 
+    order.save()
+    return redirect('product_list')
+
+
+
+#When user is administrator And add product And Button in product_list.html
+@login_required
+def add_product(request):
     if request.user.role != 'administrator':
         return redirect('home')
+    
+    #After submitting the form
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    
+    #If the request method is GET When user first visits the add product page
+    else:
+        form = ProductForm()
+    
+    return render(request, 'yard_market/add_product.html', {'form': form})
 
-    categories = Category.objects.all()
-    form = CategoryForm(request.POST or None)  # Prefill the form if submitted
-
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        return redirect('add_category')  # Reload the same page to show updates
-
-    return render(request, 'yard_market/add_category.html', {'form': form, 'categories': categories})
-
-
-@login_required
-def delete_category(request, category_id):
-    if request.user.role != 'administrator':
-        return redirect('home')
-
-    category = get_object_or_404(Category, id=category_id)
-    category.delete()
-    return redirect('add_category')
 
 
 
@@ -161,17 +178,49 @@ def delete_product(request, product_id):
 
     return render(request, 'yard_market/delete_product.html', {'product': product})
 
-@login_required
-def user_orders(request):
-    orders = Order.objects.filter(user=request.user)  
-  
-    return render(request, 'yard_market/order_admin_list.html', {'orders': orders})
 
+
+
+
+
+
+from .models import Category
+from .forms import CategoryForm  # Ensure you have this form
+
+
+#For add category CLick By Add category Button in Navbar of Admin
 @login_required
-def all_user_orders(request):
-   
-    orders1 = Order.objects.all()
-    return render(request, 'yard_market/order_admin_list.html', {'orders': orders1})
+def manage_categories(request):
+    if request.user.role != 'administrator':
+        return redirect('home')
+
+    categories = Category.objects.all()
+    form = CategoryForm(request.POST or None)  # Prefill the form if submitted
+
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('add_category')  # Reload the same page to show updates
+
+    return render(request, 'yard_market/add_category.html', {'form': form, 'categories': categories})
+
+#For Delete category CLick By Add category Button in Navbar of Admin
+@login_required
+def delete_category(request, category_id):
+    if request.user.role != 'administrator':
+        return redirect('home')
+
+    category = get_object_or_404(Category, id=category_id)
+    category.delete()
+    return redirect('add_category')
+
+
+
+
+
+
+
+
+
 
 def scheme_search(request):
 

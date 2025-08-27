@@ -25,6 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
+                <!--Product_list is for display if -->
                 <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Yard Market</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
                <!-- if uesr is authenticated and is administrator -->
@@ -47,6 +48,12 @@
                 {% else %}
                     <li class="nav-item"><a class="btn btn-light btn-sm me-2" href="{% url 'login' %}">Login</a></li>
                     <li class="nav-item"><a class="btn btn-warning btn-sm" href="{% url 'signup' %}">Sign Up</a></li>
+                    <!--{% url 'signup' %} means:
+                        
+                        Look into urls.py
+                        Find the path that has the name 'signup'
+                        Replace this with the actual URL.
+                    -->
                 {% endif %}
             </ul>
         </div>

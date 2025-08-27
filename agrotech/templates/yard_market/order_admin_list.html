@@ -158,6 +158,13 @@
     </style>
 </head>
 <body>
+    <!-- order_admin_list.html is used only when a view renders it.
+    In your code, that happens in:
+    user_orders → for farmers (their own orders)
+    all_user_orders → for admin (all orders) -->
+
+
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{% url 'home' %}">AgroTech</a>
@@ -193,6 +200,11 @@
     </nav>
     
     
+
+    <!-- order_admin_list.html is used only when a view renders it.
+    In your code, that happens in:
+    user_orders → for farmers (their own orders)
+    all_user_orders → for admin (all orders) -->
     <div class="container">
         <h1>Your Orders</h1>
         <table class="table">
