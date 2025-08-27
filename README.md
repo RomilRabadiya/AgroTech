@@ -23,7 +23,7 @@ AgroTech is built using a modern, reliable, and scalable technology stack to ens
 ![Admin Dashboard](screenshots/admin-dashboard.png)
 
 **Farmer Dashboard**:
-![Farmer Dashboard](screenshots/farmer-dashboard.png)
+![Farmer Dashboard](screenshots/admin-farmer.png)
 
 ---
 
