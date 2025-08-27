@@ -294,6 +294,3 @@ urlpatterns = [
 * Manage product categories
 * View all platform orders
 * Access admin-only features
-
-
-Do you also want me to **add badges (Django, Python, Bootstrap, SQLite, etc.) at the top** to make it look even better for GitHub?
